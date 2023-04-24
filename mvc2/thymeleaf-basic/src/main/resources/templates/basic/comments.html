@@ -1,0 +1,21 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>예시</h1>
+<span th:text="${data}">html data</span>
+<h1>1. 표준 HTML 주석</h1>
+<!--
+<span th:text="${data}">html data, 페이지에선 안보이지만 코드엔 주석 남아있음 </span>
+-->
+<h1>2. 타임리프 파서 주석</h1>
+<!--/* [[${data}]] 아예 없어져서 코드에서도 안 보임*/-->
+<!--/*-->
+<span th:text="${data}">html data, 주석 사이에 있으므로 그냥 통으로 사라짐</span>
+<!--*/-->
+<h1>3. 타임리프 프로토타입 주석</h1>
+<!--/*/ <span th:text="${data}">html data</span> /*/-->
+</body>
+</html>
