@@ -6,7 +6,7 @@ import jpabook.jpashop.domain.Member;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MemberRepository {
+public class MemberRepositoryOLD {
     @PersistenceContext
     private EntityManager em; // 스프링부트가 알아서 얘 자동으로 생성해줌
 

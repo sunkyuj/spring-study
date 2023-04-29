@@ -1,0 +1,20 @@
+# 테스트시 이 /test/resources/application.yml을 따름
+spring: # 근데 사실 스프링부트는 별도의 내용을 정의하지 않으면 기본적으로 메모리 디비 사용함
+#  datasource:
+#    url: jdbc:h2:mem:test # 메모리 디비를 사용해서 h2 꺼도 됨
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#    properties:
+#      hibernate:
+##        show_sql: true # System.out
+#        format_sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug # logger
+    org.hibernate.type: trace
