@@ -1,7 +1,9 @@
 package jpabook.jpashop.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -12,6 +14,7 @@ import java.util.List;
 @Entity // DB 테이블에 매핑
 @Table(name="orders") // 없으면 그냥 클래스명을 테이블에 매핑
 @Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // new로 생성하는거 막음
 public class Order { // cascade 때문에 Order만 persist 하면 OrderItems, Delivery 다 persist 됨
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,4 +54,44 @@ public class Order { // cascade 때문에 Order만 persist 하면 OrderItems, De
         this.delivery = delivery; // Order(얘 자신)의 delivery에 Delivery 넣어줌
         delivery.setOrder(this); // Delivery에는 이 Order를 넣어줌
     }
+
+    //==생성 메서드==//
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        order.setOrderItems(List.of(orderItems));
+        order.setOrderDate(LocalDateTime.now());
+        order.setStatus(OrderStatus.ORDER);
+
+        return order;
+    }
+
+    //==비즈니스 로직==//
+    /*
+     * 주문 취소
+     * */
+    public void cancel() {
+        if (delivery.getStatus() == DeliveryStatus.COMP) {
+            throw new IllegalStateException("이미 배송 완료된 상품은 취소가 불가능합니다.");
+        }
+        this.setStatus(OrderStatus.CANCEL);
+        for (OrderItem orderItem : orderItems) {
+            orderItem.cancel();
+        }
+    }
+
+    //==조회 로직==//
+    /**
+     * 전체 주문 가격 조회
+     */
+    public int getTotalPrice() {
+        int totalPrice = 0;
+        for (OrderItem orderItem : orderItems) {
+            //totalPrice += orderItem.getOrderPrice(); // 이거는 가격 하나임
+            totalPrice += orderItem.getTotalPrice(); // 이거는 가격*수량
+        }
+        return totalPrice;
+    }
+
 }

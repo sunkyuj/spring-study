@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional(readOnly = true) // JPA의 내용 변경이나 모든 것들은 기본적으로 트랜잭션 안에서 일어나야함
