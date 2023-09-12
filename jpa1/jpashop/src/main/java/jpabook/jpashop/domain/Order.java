@@ -60,7 +60,9 @@ public class Order { // cascade 때문에 Order만 persist 하면 OrderItems, De
         Order order = new Order();
         order.setMember(member);
         order.setDelivery(delivery);
-        order.setOrderItems(List.of(orderItems));
+        for (OrderItem orderItem : orderItems) {
+            order.addOrderItem(orderItem);
+        }
         order.setOrderDate(LocalDateTime.now());
         order.setStatus(OrderStatus.ORDER);
 
