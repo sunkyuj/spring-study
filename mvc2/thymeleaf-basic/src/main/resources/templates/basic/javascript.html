@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- 자바스크립트 인라인 사용 전 -->
+<script>
+    var username = [[${user.username}]]; // 여기에 UserA가 그대로 들어가는데, 실제론 "UserA"가 들어가야 함
+    var age = [[${user.age}]];
+    //자바스크립트 내추럴 템플릿
+    var username2 = /*[[${user.username}]]*/ "test username";
+    //객체
+    var user = [[${user}]]; // 객체를 바로 넣으면 toString() 된 값이 들어감
+</script>
+
+<!-- 자바스크립트 인라인 사용 후 -->
+<script th:inline="javascript">
+    var username = [[${user.username}]];
+    var age = [[${user.age}]];
+    //자바스크립트 내추럴 템플릿
+    var username2 = /*[[${user.username}]]*/ "test username"; // 렌더링 시 주석을 값으로 쓸 수 있게 해줌
+    //객체
+    var user = [[${user}]]; // 객체를 json으로 넣어줌
+</script>
+
+<!-- 자바스크립트 인라인 each -->
+<script th:inline="javascript">
+    [# th:each="user, stat : ${users}"]
+    var user[[${stat.count}]] = [[${user}]];
+    [/]
+</script>
+</body>
+</html>
