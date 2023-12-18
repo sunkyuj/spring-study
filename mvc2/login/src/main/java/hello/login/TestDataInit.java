@@ -26,7 +26,7 @@ public class TestDataInit {
 
         Member member = new Member();
         member.setLoginId("test");
-        member.setName("test!");
+        member.setName("test");
         member.setPassword("test");
 
         memberRepository.save(member);
